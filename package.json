@@ -1,0 +1,21 @@
+{
+  "name": "todos-api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon api.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/A-plus-development-team/todos-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/A-plus-development-team/todos-api/issues"
+  },
+  "homepage": "https://github.com/A-plus-development-team/todos-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
