@@ -50,55 +50,20 @@ app.use(express.json());
 //     })
 // })
 
-// Seguridad
-app.post('/login', (request, response) => {
-    const email = request.body.email
-    const password = request.body.password
+const login = require('./controllers/user/login')
+const register = require('./controllers/user/register')
 
-    // TODO: verificar si la combinacion de email + password existe en la BD
-    // Ejemplo en SQL: SELECT * FROM usuarios WHERE email=pedro@gmail.com AND password=secret
-
-    // Se verifica si el email y la contrasena de usuario ingresadas matchean con la base de datos 
-    const usuarioEncontrado = usuarios.find(usuario =>
-        usuario.email === email && usuario.password === password
-    )
-
-    // Si matchean los datos de ingreso se muestra mensaje y token, si no, se muestra emnsaje de error
-    if (usuarioEncontrado) {
-        response.status(201).json({
-            mensaje: `Login con exito para el usuario ${email}`,
-            token: 'sdf76sdjasdf3wrvlxft9ye4wrjqhabdfvkw4923445yujhgDFGDFgfd8df3f'
-        })
-    } else {
-        response.status(403).json({
-            mensaje: 'Credenciales incorrectas'
-        })
-    }
-})
+// Seguridad. Loguear usuario en el sistema
+app.post('/login', login)
 
 // Registrar nuevo usuario en el sistema
-app.post('/registro', (request, response) => {
-    // Obtencion de los datos del nuevo usuario
-    const nuevoUsuario = {
-        id: usuarios[usuarios.length -1].id + 1, // Obtiene el id del ultimo usuario del array y le agrega 1
-        email: request.body.email,
-        password: request.body.password
-    }
-
-    // Empujamos el nuevo usuario al array de usuarios
-    usuarios.push(nuevoUsuario)
-
-    // Cuando se crea el nuevo usuario, mostramos los datos publicos creados
-    response.status(201).json({
-        usuario: {
-            id: nuevoUsuario.id,
-            email: nuevoUsuario.email
-        }
-    })
-})
+app.post('/registro', register)
 
 // Todos
-app.get('/todos', (request, response) => {
+// Cuando se invoca la ruta /todos con el metodo GET, ejecuta el middleware 
+// y despues el controlador de la funcion (checkIfTheUserHasCredentials),
+// entonces la peticion de tareas solo se va a hacer si la peticion incluye las credenciales del usuario (dicese del token)
+app.get('/todos', checkIfTheUserHasCredentials, (request, response) => {
     // Obtiene un filtro de paginas desde el request
     const page = request.query.page
     // Si viene definido un numero de items por pagina se lo asigna, si no, por defecto asigna 10
