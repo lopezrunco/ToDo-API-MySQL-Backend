@@ -1,5 +1,5 @@
-// Importamos la biblioteca express
-const express = require('express')
+// Carga todas las variables de entorno usando la biblioteca dotenv
+require('dotenv').config()
 
 // Emulacion de la base de datos
 const usuarios = [{
@@ -24,12 +24,15 @@ const todos = [{
 // Creacion de app express
 // ############################
 
+const express = require('express')
 const app = express()
 const port = 3000
 
 // ############################
 // Middlewares
 // ############################
+
+const checkIfTheUserHasCredentials = require('./middlewares/checkIfTheUserHasCredentials')
 
 // Esta linea es para entender el JSON que se le envia a la API
 app.use(express.json());
