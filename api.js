@@ -24,7 +24,7 @@ const register = require('./controllers/user/register')
 const getAllTodos = require('./controllers/todos/get-all')
 const getTodoById = require('./controllers/todos/get-by-id')
 const createTodo = require('./controllers/todos/create')
-const deleteToo = require('./controllers/todos/delete')
+const deleteTodo = require('./controllers/todos/delete')
 
 // Definicion de rutas -------------------------------------------------------------------------------- //
 
@@ -40,6 +40,6 @@ app.post('/registro', register)
 app.get('/todos', checkIfTheUserHasCredentials, getAllTodos)
 app.get('/todos/:id', checkIfTheUserHasCredentials, getTodoById)
 app.post('/todos', checkIfTheUserHasCredentials, createTodo )
-app.delete('/todos/:id', checkIfTheUserHasCredentials, deleteToo )
+app.delete('/todos/:id', checkIfTheUserHasCredentials, deleteTodo )
 
 app.listen(port)

@@ -1,3 +1,4 @@
+// Importacion de las bibliotecas bcrypt y Joi
 const bcrypt = require('bcrypt')
 const Joi = require('joi')
 
