@@ -15,6 +15,10 @@ const sequelize = new Sequelize({
     password: process.env.DB_PASSWORD
 })
 
+// Carga de modelos  ----------------------------------------------------------------------------------- //
+
+const userModel = require('./models/user')(sequelize)   // Se pasa sequelize como parametro para la definicion del modelo
+
 // Creacion de app express ---------------------------------------------------------------------------- //
 
 const app = express()
@@ -43,7 +47,7 @@ const deleteTodo = require('./controllers/todos/delete')
 // Users (Loguear y registrar usuarios en el sistema)
 app.post('/login', login)
 
-app.post('/registro', register)
+app.post('/registro', register(sequelize))
 
 // Todos
 // Cuando se invoca la ruta /todos con el metodo GET, ejecuta el middleware 
@@ -59,11 +63,13 @@ sequelize
   .authenticate()
   .then(() => {
       // Sincroniza los modelos con la base de datos (Crea las tablas si no existen)
-      sequelize.sync({ alter: true }).then(() => {
-        // Comenzar a escuchar por conexiones
-        app.listen(process.env.PORT)
-      })
-  })
+      sequelize
+        .sync({ alter: true })
+        .then(() => {
+            // Comenzar a escuchar por conexiones
+            app.listen(process.env.API_PORT)
+        })
+    })
   .catch(error => {
     console.error('No fue posible conectarse a la base de datos', error)
-  })
+})
