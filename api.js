@@ -1,11 +1,23 @@
 // Carga todas las variables de entorno usando la biblioteca dotenv
 require('dotenv').config()
 
+const { Sequelize } = require('sequelize')
+const express = require('express')
+
+// Conexion a base de datos ---------------------------------------------------------------------------- //
+
+const sequelize = new Sequelize({
+    dialect: 'mysql',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
+})
+
 // Creacion de app express ---------------------------------------------------------------------------- //
 
-const express = require('express')
 const app = express()
-const port = 3000
 
 // Middlewares ---------------------------------------------------------------------------------------- //
 
@@ -42,4 +54,16 @@ app.get('/todos/:id', checkIfTheUserHasCredentials, getTodoById)
 app.post('/todos', checkIfTheUserHasCredentials, createTodo )
 app.delete('/todos/:id', checkIfTheUserHasCredentials, deleteTodo )
 
-app.listen(port)
+// Funcion asincrona, primero se autentica y solo despues corre el codigo. Si no se autentica, arroja error.
+sequelize
+  .authenticate()
+  .then(() => {
+      // Sincroniza los modelos con la base de datos (Crea las tablas si no existen)
+      sequelize.sync({ alter: true }).then(() => {
+        // Comenzar a escuchar por conexiones
+        app.listen(process.env.PORT)
+      })
+  })
+  .catch(error => {
+    console.error('No fue posible conectarse a la base de datos', error)
+  })
