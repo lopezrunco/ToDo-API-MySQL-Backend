@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const Joi = require('joi')
 
 // Importamos el modelo de usuario
-const userModel = require('../../models/user');
+const userModel = require('../../models/user')
 
 module.exports = (sequelize) => {
     return (request, response) => {
@@ -59,12 +59,12 @@ module.exports = (sequelize) => {
                 response.status(500).json({
                     message: 'No se pudo registrar el usuario'
                 })
-
-            } else {
-                // Si hay error, se muestra mensaje con el error de validacion que arroja Joi
-                response.status(400).json({
-                    message: validationResult.error
-                })
-            }
+            })
+        } else {
+            // Si hay error, se muestra mensaje con el error de validacion que arroja Joi
+            response.status(400).json({
+                message: validationResult.error
+            })
+        }
     }
 }
