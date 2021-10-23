@@ -36,6 +36,7 @@ app.use(express.json())
 // Users
 const login = require('./controllers/user/login')
 const register = require('./controllers/user/register')
+const getAllUsers = require('./controllers/user/get-all')
 
 // Todos
 const getAllTodos = require('./controllers/todos/get-all')
@@ -48,6 +49,7 @@ const deleteTodo = require('./controllers/todos/delete')
 // Users (Loguear y registrar usuarios en el sistema)
 app.post('/login', login(sequelize))
 app.post('/registro', register(sequelize))
+app.get('/admin/users', checkIfTheUserHasCredentials, getAllUsers(sequelize))
 
 // Todos
 // Cuando se invoca la ruta /todos con el metodo GET, ejecuta el middleware 

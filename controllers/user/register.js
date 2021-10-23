@@ -1,5 +1,6 @@
 // Importacion de las bibliotecas bcrypt y Joi
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const Joi = require('joi')
 
 // Importamos el modelo de usuario
@@ -48,8 +49,15 @@ module.exports = (sequelize) => {
 
                 // Se obtiene el usuario de forma plana
                 const userWithoutPassword = user.get({ plain: true })
+
                 // Se borra la password
                 delete userWithoutPassword.password
+
+                // Agregamos token de usuario
+                userWithoutPassword.token = jwt.sign({
+                    id: userWithoutPassword._id,
+                }, process.env.JWT_KEY, { expiresIn: '1h' })
+
                 // Se retorna la informacion de usuario sin la password
                 response.json({
                     user: userWithoutPassword

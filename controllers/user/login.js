@@ -22,7 +22,6 @@ module.exports = (sequelize) => {
                     // Agregamos token de usuario
                     user.token = jwt.sign({
                         id: user._id,
-                        role: user.role
                     }, process.env.JWT_KEY, { expiresIn: '1h' })
 
                     // Retornamos el usuario
