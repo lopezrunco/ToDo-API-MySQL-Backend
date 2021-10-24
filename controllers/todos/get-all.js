@@ -1,14 +1,18 @@
-module.exports = (request, response) => {
-    // Obtiene un filtro de paginas desde el request
-    const page = request.query.page
-    // Si viene definido un numero de items por pagina se lo asigna, si no, por defecto asigna 10
-    const itemsPerPage = request.query.items || 10
+const todoModel = require('../../models/todo')
 
-    if (page) {
-        // TODO: aplicar paginado
+module.exports = (sequelize) => {
+    return (request, response) => {
+        todoModel(sequelize).findAll().then(todos => {
+            response.status(200).json({
+                todos
+            })
+
+        }).catch(error => {
+            console.error(error)
+
+            response.status(500).json({
+                message: 'Error al intentar listar los todos'
+            })
+        })
     }
-
-    response.status(200).json({
-        todos
-    })
 }

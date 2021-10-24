@@ -1,3 +1,5 @@
-module.exports = (request, response) => {
-    // TODO: Eliminar todo
+module.exports = (Sequelize) => {
+    return (request, response) => {
+        // TODO: Eliminar todo dado un ID
+    }
 }

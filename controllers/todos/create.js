@@ -1,3 +1,5 @@
-module.exports = (request, response) => {
-    // TODO: Crear todo
+module.exports = (sequelize) => {
+    return (request, response) => {
+        // TODO: Crear un todo
+    }
 }

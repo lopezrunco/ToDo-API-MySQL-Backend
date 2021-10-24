@@ -5,8 +5,6 @@ module.exports = (sequelize) => {
         userModel(sequelize).findAll({
             attributes: { exclude: ['password'] }
         }).then(users => {
-            console.log(users)
-
             response.status(200).json({
                 users
             })
