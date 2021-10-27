@@ -16,6 +16,7 @@ module.exports = (request, response, next) => {
 
     // Si alguna linea del try da error, se corta el programa y se captura el error
     } catch(error) {
+        console.error('Error en el token', error)
 
         // Se retorna un error 401 en caso de que el token no se valido
         return response.status(401).json({

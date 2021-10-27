@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const { Sequelize } = require('sequelize')
 const express = require('express')
+const cors = require('cors')
 
 // Conexion a base de datos ---------------------------------------------------------------------------- //
 
@@ -27,6 +28,9 @@ const app = express()
 // Middlewares ---------------------------------------------------------------------------------------- //
 
 const checkIfTheUserHasCredentials = require('./middlewares/check-if-the-user-has-credentials')
+
+// Cors retorna una funcion middleware que abre la API en terminos de seguridad, para poder conectarnos con el front-end al desarrollar (Permite conexiones entre una misma IP)
+app.use(cors())
 
 // Esta linea es para entender el JSON que se le envia a la API
 app.use(express.json())

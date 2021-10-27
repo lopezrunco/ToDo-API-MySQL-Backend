@@ -29,9 +29,11 @@ module.exports = (sequelize) => {
                         user
                     })
                 } else {
+                    console.error('La password no es correcta')
                     response.status(401).end()
                 }
             } else {
+                console.error('No se encontro el usuario')
                 response.status(401).end()
             }
         }).catch(error => {
