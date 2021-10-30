@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
             console.error(error)
 
             response.status(500).json({
-                message: 'Error al intentar listar los todos'
+                message: 'Error al intentar listar las tareas'
             })
         })
     }
