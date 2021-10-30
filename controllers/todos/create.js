@@ -10,10 +10,8 @@ module.exports = (sequelize) => {
         // Esquema de validacion
         const schema = Joi.object({
             title: Joi.string()
-                .alphanum()
                 .required(),
             description: Joi.string()
-                .alphanum()
                 .required(),
             priority: Joi.string()
                 .valid('BAJA', 'MEDIA', 'ALTA')

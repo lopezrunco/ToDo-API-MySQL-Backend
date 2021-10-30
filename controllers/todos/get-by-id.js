@@ -3,7 +3,7 @@ const todoModel = require('../../models/todo')
 module.exports = (sequelize) => {
     return (request, response) => {
         todoModel(sequelize)
-            .findByPk(request.params.id)    // En los parametros de la request viene el id
+            .findByPk(request.params.id) // findByPk busca un objeto por su primaryKey. Se obtiene la misma en los parametros de la request
             .then(todo => {
                 if (todo) {
                     response.json({
