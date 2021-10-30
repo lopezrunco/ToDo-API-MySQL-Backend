@@ -47,6 +47,7 @@ const getAllTodos = require('./controllers/todos/get-all')
 const getTodoById = require('./controllers/todos/get-by-id')
 const createTodo = require('./controllers/todos/create')
 const deleteTodo = require('./controllers/todos/delete')
+const updateTodo = require('./controllers/todos/update')
 
 // Definicion de rutas -------------------------------------------------------------------------------- //
 
@@ -56,13 +57,12 @@ app.post('/registro', register(sequelize))
 app.get('/admin/users', checkIfTheUserHasCredentials, getAllUsers(sequelize))
 
 // Todos
-// Cuando se invoca la ruta /todos con el metodo GET, ejecuta el middleware 
-// y despues el controlador de la funcion (checkIfTheUserHasCredentials),
-// entonces la peticion solo ejecutara si la misma incluye las credenciales del usuario (dicese del token)
 app.get('/todos', checkIfTheUserHasCredentials, getAllTodos(sequelize))
 app.get('/todos/:id', checkIfTheUserHasCredentials, getTodoById(sequelize))
 app.post('/todos', checkIfTheUserHasCredentials, createTodo(sequelize))
 app.delete('/todos/:id', checkIfTheUserHasCredentials, deleteTodo(sequelize))
+app.put('/todos/:id', checkIfTheUserHasCredentials, updateTodo(sequelize))
+
 
 // Funcion asincrona, primero se autentica y solo despues corre el codigo. Si no se autentica, arroja error.
 sequelize
