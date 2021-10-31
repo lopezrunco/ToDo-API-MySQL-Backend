@@ -17,8 +17,23 @@ module.exports = (sequelize) => {
 
         // Lista todos las tareas y responde mostrandolas en la UI
         todoModel(sequelize).findAll(pagination).then(todos => {
-            response.status(200).json({
-                todos
+            // El metodo count cuenta la cantidad de objetos
+            todoModel(sequelize).count().then(count => {
+                const meta = {
+                    count
+                }
+
+                // Responde al front end con el numero de tareas y las tareas en si
+                response.status(200).json({
+                    meta,
+                    todos
+                })
+            }).catch(error => {
+                console.error(error)
+    
+                response.status(500).json({
+                    message: 'Error al intentar listar las tareas'
+                })
             })
 
         }).catch(error => {
