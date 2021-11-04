@@ -1,4 +1,4 @@
-# API REST con el framework Express
+# API REST con el framework Express (Usando MySQL)
 
 ## Instrucciones de uso
 
